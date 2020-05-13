@@ -3,7 +3,7 @@
   let output = "";
 
   function encrypt() {
-    console.log("Encrypt button clicked");
+    console.log("Encrypt button was clicked");
     let plainText = input;
     let cipherText = "";
 
@@ -13,19 +13,37 @@
 
     output = cipherText;
   }
+
+  function decrypt(){
+    console.log("Decrypt button was clicked");
+    let cipherText = input
+    let plainText = ''
+    let charCode = ''
+
+    for(let i = 0; i < cipherText.length; i++){
+      if(cipherText[i] !== '|'){
+        charCode += cipherText[i]
+      } else{
+        plainText += String.fromCharCode(charCode)
+        charCode = ''
+      }
+    }
+    output = plainText
+  }
 </script>
 
 <section class="section content">
   <h1>Cipher</h1>
 
-  <label>
+  <label class="label">
     Text:
-    <input type="text" bind:value={input} />
+    <input class="input" type="text" bind:value={input} />
   </label>
 
-  <button on:click={encrypt}>Encrypt</button>
+  <button class="button is-success" on:click={encrypt}>Encrypt</button>
+  <button class="button is-warning" on:click={decrypt}>Decrypt</button>
 
-  <h2>Result:</h2>
+  <h3>Result:</h3>
 
   <p>{output}</p>
 </section>
