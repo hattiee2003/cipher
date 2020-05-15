@@ -1,5 +1,5 @@
 <script>
-  const shift = 3
+  const shift = 3;
   let input = "";
   let output = "";
 
@@ -10,30 +10,68 @@
 
     for (let i = 0; i < plainText.length; i++) {
       //cipherText += plainText.charCodeAt(i) + "|";
-      let charCode = plainText.charCodeAt(i)
-      charCode += shift
-      cipherText += charCode + '|'
+      let charCode = plainText.charCodeAt(i);
+      charCode += shift;
+      cipherText += charCode + "|";
     }
 
     output = cipherText;
   }
 
-  function decrypt(){
+  function decrypt() {
     console.log("Decrypt button was clicked");
-    let cipherText = input
-    let plainText = ''
-    let charCode = ''
+    let cipherText = input;
+    let plainText = "";
+    let charCode = "";
 
-    for(let i = 0; i < cipherText.length; i++){
-      if(cipherText[i] !== '|'){
-        charCode += cipherText[i]
-      } else{
-        charCode -= shift
-        plainText += String.fromCharCode(charCode)
-        charCode = ''
+    for (let i = 0; i < cipherText.length; i++) {
+      if (cipherText[i] !== "|") {
+        charCode += cipherText[i];
+      } else {
+        charCode -= shift;
+        plainText += String.fromCharCode(charCode);
+        charCode = "";
       }
     }
-    output = plainText
+    output = plainText;
+  }
+
+  function analyse() {
+    console.log("Analyse button clicked");
+    let cipherText = input;
+    let charCode = "";
+    let codes = [];
+    let analysis = "";
+
+  //create an array of character codes from string
+    for (let i = 0; i < cipherText.length; i++) {
+      if (cipherText[i] !== "|") {
+        charCode += cipherText[i];
+      } else {
+        codes = [...codes, charCode];
+        charCode = "";
+      }
+    }
+
+  //if the array isnt empty, count all the duplicates
+    if (codes.length) {
+      codes.sort();
+      let currentCode = codes[0];
+      let count = 0;
+
+      for (let i = 0; i < codes.length; i++) {
+        if (codes[i] === currentCode) {
+          count++;
+        } else {
+          analysis += currentCode + " appears " + count + " times.<br>";
+          currentCode = codes[i];
+          count = 1;
+        }
+      }
+      analysis += currentCode + " appears " + count + " times.<br>";
+    }
+
+    output = analysis;
   }
 </script>
 
@@ -47,8 +85,9 @@
 
   <button class="button is-success" on:click={encrypt}>Encrypt</button>
   <button class="button is-warning" on:click={decrypt}>Decrypt</button>
+  <button class="button is-link" on:click={analyse}>Analyse</button>
 
   <h3>Result:</h3>
+  <p>{@html output}</p>
 
-  <p>{output}</p>
 </section>
