@@ -1,5 +1,5 @@
 <script>
-  const shift = 3;
+  let shift = 3;
   let input = "";
   let output = "";
 
@@ -81,6 +81,11 @@
   <label class="label">
     Text:
     <input class="input" type="text" bind:value={input} />
+  </label>
+
+  <label class="label">
+    Shift:
+    <input class="input" type="number" bind:value={shift} />
   </label>
 
   <button class="button is-success" on:click={encrypt}>Encrypt</button>
